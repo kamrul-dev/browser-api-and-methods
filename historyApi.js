@@ -1,6 +1,7 @@
 /*  
     --history.back() : going back to history in browser
     --history.forward() : going forward to history in browser
+    --history.length() : check history length
 
 We can go back and forward and reload with history.go() method:
     --history.go(-1) : one step going back
