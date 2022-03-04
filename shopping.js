@@ -1,6 +1,17 @@
+const displayLoclStorageCart = () => {
+    const cart = getCart();
+    for (const name in cart) {
+        displayProduct(name);
+    }
+}
+
+
 const addItem = () => {
     const nameField = document.getElementById('product-name');
     const name = nameField.value;
+    if (!name) {
+        return;
+    }
 
     // display in UI
     displayProduct(name);
@@ -18,21 +29,36 @@ const displayProduct = name => {
     ul.appendChild(li);
 }
 
+// get cart and check item is exist or not
 const getCart = () => {
     const cart = localStorage.getItem('cart');
     let cartObj;
-    if(cart){
+    if (cart) {
         cartObj = JSON.parse(cart);
     }
-    else{
+    else {
         cartObj = {};
     }
     return cartObj;
 }
 const addProductToCart = name => {
     const cart = getCart();
-    cart[name] = 1;
-    console.log(cart);
+    // increase quantity same type product
+    if (cart[name]) {
+        cart[name] = cart[name] + 1;
+    }
+    else {
+        cart[name] = 1;
+    }
+    // console.log(cart);
     const cartStringified = JSON.stringify(cart);
     localStorage.setItem('cart', cartStringified);
 }
+
+// order place
+const placeOrder = () => {
+    document.getElementById('products').textContent = '';
+    localStorage.removeItem('cart');
+}
+
+displayLoclStorageCart();
